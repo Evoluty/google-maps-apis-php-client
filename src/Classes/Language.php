@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GoogleMapsClient;
+namespace GoogleMapsClient\Classes;
 
 use MyCLabs\Enum\Enum;
 

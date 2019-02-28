@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\TimeZone;
 
+use GoogleMapsClient\Classes\Geolocation;
+use GoogleMapsClient\Classes\Language;
 use GoogleMapsClient\GoogleMapsRequest;
-use GoogleMapsClient\Language;
 use Psr\Http\Message\RequestFactoryInterface;
 
 class TimeZoneRequest extends GoogleMapsRequest
 {
-    /** @var TimeZoneLocation */
+    /** @var Geolocation */
     private $location;
 
     /** @var int */
@@ -19,7 +20,7 @@ class TimeZoneRequest extends GoogleMapsRequest
     /** @var Language|null */
     private $language = null;
 
-    public function __construct(TimeZoneLocation $location, int $timestamp, ?RequestFactoryInterface $requestFactory = null)
+    public function __construct(Geolocation $location, int $timestamp, ?RequestFactoryInterface $requestFactory = null)
     {
         $this->location = $location;
         $this->timestamp = $timestamp;

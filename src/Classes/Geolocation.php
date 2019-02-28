@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace GoogleMapsClient\TimeZone;
+namespace GoogleMapsClient\Classes;
 
-class TimeZoneLocation
+class Geolocation
 {
     /** @var string */
     private $latitude;
