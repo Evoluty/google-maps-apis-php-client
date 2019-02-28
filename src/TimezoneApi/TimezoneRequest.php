@@ -3,6 +3,7 @@
 namespace GoogleMapsClient\TimezoneApi;
 
 use GoogleMapsClient\GoogleMapsRequest;
+use GoogleMapsClient\Language;
 use Psr\Http\Message\RequestFactoryInterface;
 
 class TimezoneRequest extends GoogleMapsRequest
