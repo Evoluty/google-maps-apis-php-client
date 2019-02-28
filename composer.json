@@ -1,0 +1,36 @@
+{
+  "name": "evoluty/google-map-php-client",
+  "description": "PHP Google Map APIs client",
+  "keywords": ["google", "map", "client", "php"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Franck Schmitt",
+      "email": "franck.schmitt@hotmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "psr/http-client": "^1.0",
+    "php-http/discovery": "^1.6",
+    "psr/http-factory": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5"
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "^6.3",
+    "php-http/guzzle6-adapter": "^2.0",
+    "zendframework/zend-diactoros": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "GoogleMapClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\GoogleMapClient\\": "tests/"
+    }
+  }
+}
