@@ -1,17 +1,17 @@
 <?php
 
-use GoogleMapClient\GoogleMapClient;
-use GoogleMapClient\GoogleMapRequest;
-use GoogleMapClient\TimezoneApi\Language;
-use GoogleMapClient\TimezoneApi\TimezoneLocation;
+use GoogleMapsClient\GoogleMapsClient;
+use GoogleMapsClient\GoogleMapsRequest;
+use GoogleMapsClient\TimezoneApi\Language;
+use GoogleMapsClient\TimezoneApi\TimezoneLocation;
 
 class ClientTest extends \PHPUnit\Framework\TestCase
 {
     public function testClientUsage()
     {
-        $googleClient = new GoogleMapClient('api-key');
+        $googleClient = new GoogleMapsClient('api-key');
 
-        $request = GoogleMapRequest::newTimezoneRequest(
+        $request = GoogleMapsRequest::newTimezoneRequest(
             new TimezoneLocation('39.6034810', '-119.6822510'), 1331161200
         )->withLanguage(Language::CZECH());
 

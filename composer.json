@@ -1,5 +1,5 @@
 {
-  "name": "evoluty/google-map-php-client",
+  "name": "evoluty/google-maps-php-client",
   "description": "PHP Google Map APIs client",
   "keywords": ["google", "map", "client", "php"],
   "license": "MIT",
@@ -27,12 +27,12 @@
   },
   "autoload": {
     "psr-4": {
-      "GoogleMapClient\\": "src/"
+      "GoogleMapsClient\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\GoogleMapClient\\": "tests/"
+      "Tests\\GoogleMapsClient\\": "tests/"
     }
   }
 }

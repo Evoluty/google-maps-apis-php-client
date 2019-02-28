@@ -1,8 +1,8 @@
 <?php
 
-namespace GoogleMapClient;
+namespace GoogleMapsClient;
 
-abstract class GoogleMapResponse
+abstract class GoogleMapsResponse
 {
     /** @var string */
     private $status;

@@ -1,11 +1,11 @@
 <?php
 
-namespace GoogleMapClient\TimezoneApi;
+namespace GoogleMapsClient\TimezoneApi;
 
-use GoogleMapClient\GoogleMapRequest;
+use GoogleMapsClient\GoogleMapsRequest;
 use Psr\Http\Message\RequestFactoryInterface;
 
-class TimezoneRequest extends GoogleMapRequest
+class TimezoneRequest extends GoogleMapsRequest
 {
     /** @var TimezoneLocation */
     private $location;

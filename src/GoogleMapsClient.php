@@ -1,14 +1,14 @@
 <?php
 
-namespace GoogleMapClient;
+namespace GoogleMapsClient;
 
-use GoogleMapClient\TimezoneApi\TimezoneRequest;
-use GoogleMapClient\TimezoneApi\TimezoneResponse;
+use GoogleMapsClient\TimezoneApi\TimezoneRequest;
+use GoogleMapsClient\TimezoneApi\TimezoneResponse;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
-class GoogleMapClient
+class GoogleMapsClient
 {
     /** @var string */
     private $key;

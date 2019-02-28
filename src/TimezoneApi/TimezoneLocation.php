@@ -1,6 +1,6 @@
 <?php
 
-namespace GoogleMapClient\TimezoneApi;
+namespace GoogleMapsClient\TimezoneApi;
 
 class TimezoneLocation
 {
