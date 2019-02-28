@@ -1,7 +1,7 @@
 {
-  "name": "evoluty/google-maps-php-client",
-  "description": "PHP Google Maps APIs client",
-  "keywords": ["google", "map", "client", "php"],
+  "name": "evoluty/google-maps-client",
+  "description": "A PHP Google Maps APIs client",
+  "keywords": ["google", "map", "client"],
   "license": "MIT",
   "authors": [
     {
