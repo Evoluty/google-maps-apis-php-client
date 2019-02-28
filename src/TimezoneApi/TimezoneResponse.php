@@ -32,9 +32,9 @@ class TimezoneResponse extends GoogleMapsResponse
         return new self(
             isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
             isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
-            $apiResponse->status,
             $apiResponse->timeZoneId,
             $apiResponse->timeZoneName,
+            $apiResponse->status,
             $apiResponse->errorMessage ?? null
         );
     }
