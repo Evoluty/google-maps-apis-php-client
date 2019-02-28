@@ -2,6 +2,8 @@
 
 namespace GoogleMapClient;
 
+use GoogleMapClient\TimezoneApi\TimezoneRequest;
+use GoogleMapClient\TimezoneApi\TimezoneResponse;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -19,18 +21,16 @@ class GoogleMapClient
         $this->key = $key;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
     }
-    
+
     private function handleRequest(RequestInterface $request, string $api): \stdClass
     {
-        $query = $request->getUri()->getQuery();
-        if (!strpos($query, '?')) {
-            $query .= '?';
-        }
-        
+        $queryString = str_replace('/', '?', $request->getUri()->__toString());
+
         $apiRequestUri = $request->getUri()
             ->withScheme('https')
-            ->withHost('maps.googleapis.com/maps/api/' . $api . '/json/')
-            ->withQuery($query . '&key=' . $this->key);
+            ->withHost('maps.googleapis.com')
+            ->withPath('maps/api/' . $api . '/json')
+            ->withQuery($queryString . '&key=' . $this->key);
 
         $response = $this->httpClient->sendRequest($request->withUri($apiRequestUri));
 
@@ -38,10 +38,15 @@ class GoogleMapClient
         if ($responseStatusCode !== 200) {
             throw new \UnexpectedValueException('Unexpected status code from api: ' . $responseStatusCode);
         }
-        
+
         $stdResult = json_decode($response->getBody()->__toString());
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \UnexpectedValueException('Unable to parse Google Api result');
+        }
+
+        // @todo: better error handling
+        if ($stdResult->status !== 'OK') {
+            throw new \UnexpectedValueException($stdResult->status . ' ' . $stdResult->errorMessage);
         }
 
         return $stdResult;

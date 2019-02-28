@@ -2,6 +2,8 @@
 
 namespace GoogleMapClient;
 
+use GoogleMapClient\TimezoneApi\TimezoneLocation;
+use GoogleMapClient\TimezoneApi\TimezoneRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -23,8 +25,8 @@ abstract class GoogleMapRequest
 
     protected abstract function getQueryString(): string;
 
-    public static function newTimezoneRequest(RequestFactoryInterface $uriFactory = null): TimezoneRequest
+    public static function newTimezoneRequest(TimezoneLocation $location, int $timestamp, RequestFactoryInterface $uriFactory = null): TimezoneRequest
     {
-        return new TimezoneRequest($uriFactory);
+        return new TimezoneRequest($location, $timestamp, $uriFactory);
     }
 }

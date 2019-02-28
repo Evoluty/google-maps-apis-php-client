@@ -1,22 +1,45 @@
 <?php
 
-namespace GoogleMapClient;
+namespace GoogleMapClient\TimezoneApi;
 
+use GoogleMapClient\GoogleMapRequest;
 use Psr\Http\Message\RequestFactoryInterface;
 
 class TimezoneRequest extends GoogleMapRequest
 {
+    /** @var TimezoneLocation */
+    private $location;
 
+    /** @var int */
+    private $timestamp;
 
-    public function __construct(RequestFactoryInterface $requestFactory = null)
+    /** @var Language|null */
+    private $language = null;
+
+    public function __construct(TimezoneLocation $location, int $timestamp, RequestFactoryInterface $requestFactory = null)
     {
+        $this->location = $location;
+        $this->timestamp = $timestamp;
         parent::__construct($requestFactory);
+    }
+
+    public function withLanguage(Language $language): self
+    {
+        $this->language = $language;
+        return $this;
     }
 
     protected function getQueryString(): string
     {
-        return http_build_query([
+        $args = [
+            'location' => strval($this->location),
+            'timestamp' => $this->timestamp,
+        ];
 
-        ]);
+        if (!empty($this->language)) {
+            $args['language'] = $this->language->getValue();
+        }
+
+        return http_build_query($args);
     }
 }
