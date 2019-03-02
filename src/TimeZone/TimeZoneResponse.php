@@ -1,10 +1,12 @@
 <?php
 
-namespace GoogleMapsClient\TimezoneApi;
+declare(strict_types=1);
+
+namespace GoogleMapsClient\TimeZone;
 
 use GoogleMapsClient\GoogleMapsResponse;
 
-class TimezoneResponse extends GoogleMapsResponse
+class TimeZoneResponse extends GoogleMapsResponse
 {
     /** @var int */
     private $dstOffset;

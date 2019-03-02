@@ -1,14 +1,16 @@
 <?php
 
-namespace GoogleMapsClient\TimezoneApi;
+declare(strict_types=1);
+
+namespace GoogleMapsClient\TimeZone;
 
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Language;
 use Psr\Http\Message\RequestFactoryInterface;
 
-class TimezoneRequest extends GoogleMapsRequest
+class TimeZoneRequest extends GoogleMapsRequest
 {
-    /** @var TimezoneLocation */
+    /** @var TimeZoneLocation */
     private $location;
 
     /** @var int */
@@ -17,7 +19,7 @@ class TimezoneRequest extends GoogleMapsRequest
     /** @var Language|null */
     private $language = null;
 
-    public function __construct(TimezoneLocation $location, int $timestamp, RequestFactoryInterface $requestFactory = null)
+    public function __construct(TimeZoneLocation $location, int $timestamp, ?RequestFactoryInterface $requestFactory = null)
     {
         $this->location = $location;
         $this->timestamp = $timestamp;

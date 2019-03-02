@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GoogleMapsClient;
 
 use MyCLabs\Enum\Enum;
@@ -67,7 +69,7 @@ use MyCLabs\Enum\Enum;
  * @method static self CHINESE_SIMPLIFIED()
  * @method static self CHINESE_TRADITIONAL()
  */
-class Language extends Enum
+final class Language extends Enum
 {
     const ARABIC = 'ar';
     const BELARUSIAN = 'be';

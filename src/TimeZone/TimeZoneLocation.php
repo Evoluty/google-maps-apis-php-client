@@ -1,8 +1,10 @@
 <?php
 
-namespace GoogleMapsClient\TimezoneApi;
+declare(strict_types=1);
 
-class TimezoneLocation
+namespace GoogleMapsClient\TimeZone;
+
+class TimeZoneLocation
 {
     /** @var string */
     private $latitude;

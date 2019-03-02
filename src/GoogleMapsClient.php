@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GoogleMapsClient;
 
-use GoogleMapsClient\TimezoneApi\TimezoneRequest;
-use GoogleMapsClient\TimezoneApi\TimezoneResponse;
+use GoogleMapsClient\TimeZone\TimeZoneRequest;
+use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -34,11 +36,6 @@ class GoogleMapsClient
 
         $response = $this->httpClient->sendRequest($request->withUri($apiRequestUri));
 
-        $responseStatusCode = $response->getStatusCode();
-        if ($responseStatusCode !== 200) {
-            throw new \UnexpectedValueException('Unexpected status code from api: ' . $responseStatusCode);
-        }
-
         $stdResult = json_decode($response->getBody()->__toString());
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \UnexpectedValueException('Unable to parse Google Api result');
@@ -52,9 +49,9 @@ class GoogleMapsClient
         return $stdResult;
     }
 
-    public function sendTimezoneRequest(TimezoneRequest $request): TimezoneResponse
+    public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
-        return TimezoneResponse::factory($apiResponse);
+        return TimeZoneResponse::factory($apiResponse);
     }
 }
