@@ -27,4 +27,10 @@ abstract class GoogleMapsResponse
     {
         return $this->errorMessage;
     }
+
+    /**
+     * @return mixed
+     */
+    public abstract function getResult();
+    public abstract function successful(): bool;
 }
