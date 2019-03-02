@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\Tests;
 
-use GoogleMapsClient\GoogleMapsClient;
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Language;
 use GoogleMapsClient\TimeZone\TimeZoneLocation;
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Http\Adapter\Guzzle6\Client;
-use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase
+class ClientTest extends AbstractClientTest
 {
     public function testOk(): void
     {
@@ -68,12 +63,7 @@ class ClientTest extends TestCase
 
     private function handleTest(Response $expectedResponse): TimeZoneResponse
     {
-        $mock = new MockHandler([$expectedResponse]);
-
-        $handler = HandlerStack::create($mock);
-        $guzzleClient = Client::createWithConfig(['handler' => $handler]);
-
-        $client = new GoogleMapsClient('key', $guzzleClient);
+        $client = static::getClient($expectedResponse);
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
             new TimeZoneLocation('39.6034810', '-119.6822510'),

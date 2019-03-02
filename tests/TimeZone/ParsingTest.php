@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GoogleMapsClient\Tests;
+namespace GoogleMapsClient\Tests\Timezone;
 
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use PHPUnit\Framework\TestCase;
