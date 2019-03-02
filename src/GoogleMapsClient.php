@@ -36,11 +36,6 @@ class GoogleMapsClient
 
         $response = $this->httpClient->sendRequest($request->withUri($apiRequestUri));
 
-        $responseStatusCode = $response->getStatusCode();
-        if ($responseStatusCode !== 200) {
-            throw new \UnexpectedValueException('Unexpected status code from api: ' . $responseStatusCode);
-        }
-
         $stdResult = json_decode($response->getBody()->__toString());
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \UnexpectedValueException('Unable to parse Google Api result');

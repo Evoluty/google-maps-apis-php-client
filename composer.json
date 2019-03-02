@@ -21,7 +21,8 @@
     "phpunit/phpunit": "^5",
     "guzzlehttp/guzzle": "^6.3",
     "php-http/guzzle6-adapter": "^2.0",
-    "http-interop/http-factory-guzzle": "^1.0"
+    "http-interop/http-factory-guzzle": "^1.0",
+    "zendframework/zend-diactoros": "^2.1"
   },
   "suggest": {
     "guzzlehttp/guzzle": "^6.3",
