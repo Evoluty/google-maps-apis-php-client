@@ -44,6 +44,11 @@ class GoogleMapsClient
         return $stdResult;
     }
 
+    /**
+     * @param TimeZoneRequest $request
+     * @return TimeZoneResponse
+     * @throws Errors\ApiException
+     */
     public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
@@ -52,10 +57,14 @@ class GoogleMapsClient
         return $response;
     }
 
+    /**
+     * @param GoogleMapsResponse $response
+     * @throws Errors\ApiException
+     */
     private static function assertSuccessful(GoogleMapsResponse $response): void
     {
         if (!$response->successful()) {
-            throw new \UnexpectedValueException($response->getStatus() . ' ' . $response->getErrorMessage());
+            throw $response->getError();
         }
     }
 }

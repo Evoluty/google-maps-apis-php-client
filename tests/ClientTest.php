@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\Tests;
 
+use GoogleMapsClient\Errors\InvalidRequestException;
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Language;
 use GoogleMapsClient\TimeZone\TimeZoneLocation;
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use GuzzleHttp\Psr7\Response;
+use Http\Client\Exception\HttpException;
 
 class ClientTest extends AbstractClientTest
 {
@@ -30,7 +32,7 @@ class ClientTest extends AbstractClientTest
 
     public function testNot200(): void
     {
-        $this->expectException('Http\Client\Exception\HttpException');
+        $this->expectException(HttpException::class);
 
         $expectedResponse = new Response(400, [], json_encode([
             'errorMessage' => "Invalid request. Invalid 'timestamp' parameter.",
@@ -42,7 +44,7 @@ class ClientTest extends AbstractClientTest
 
     public function testBadResponse(): void
     {
-        $this->expectException('\UnexpectedValueException');
+        $this->expectException(\UnexpectedValueException::class);
 
         $expectedResponse = new Response(200, [], "{");
 
@@ -51,7 +53,7 @@ class ClientTest extends AbstractClientTest
 
     public function testBadResponseStatus(): void
     {
-        $this->expectException('\UnexpectedValueException');
+        $this->expectException(InvalidRequestException::class);
 
         $expectedResponse = new Response(200, [], json_encode([
             'errorMessage' => "Invalid request. Invalid 'timestamp' parameter.",
