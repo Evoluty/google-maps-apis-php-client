@@ -11,15 +11,15 @@ This will parse results and give usable and typed objects as a result
 Run `composer require evoluty/google-maps-client`  or check directly on the [packagist website](https://packagist.org/packages/evoluty/google-maps-client)
 
 ## Usage
-Use like the following (example with the Timezone API)
+Use like the following (example with the TimeZone API)
 ```php
 $googleClient = new GoogleMapClient(<your_api_key>');
 
-$request = GoogleMapRequest::newTimezoneRequest(
-    new TimezoneLocation('39.6034810', '-119.6822510'), 1331161200
+$request = GoogleMapRequest::newTimeZoneRequest(
+    new TimeZoneLocation('39.6034810', '-119.6822510'), 1331161200
 )->withLanguage(Language::CZECH());
 
-$timezoneResponse = $googleClient->sendTimezoneRequest($request);
+$timeZoneResponse = $googleClient->sendTimeZoneRequest($request);
 
 ```
 
@@ -29,4 +29,4 @@ The response type depends on the API that you are calling and will contain publi
 ## APIs
 
 At the moment the following API are implemented:
-* Timezone API
+* TimeZone API
