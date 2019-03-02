@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RequestBuilderTest extends TestCase
 {
-    public function testTimezoneRequestBuilding(): void
+    public function testTimeZoneRequestBuilding(): void
     {
         $request = GoogleMapsRequest::newTimeZoneRequest(
             new TimeZoneLocation('39.6034810', '-119.6822510'),
