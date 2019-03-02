@@ -5,32 +5,33 @@ declare(strict_types=1);
 namespace GoogleMapsClient\Tests;
 
 use GoogleMapsClient\TimezoneApi\TimezoneResponse;
+use PHPUnit\Framework\TestCase;
 
-class ParsingTest extends \PHPUnit\Framework\TestCase
+class ParsingTest extends TestCase
 {
-    private function getTimezoneApiResult(): \stdClass
+    private static function getTimezoneApiResult(): \stdClass
     {
         return (object)[
             'dstOffset' => 0,
             'rawOffset' => -28800,
             'status' => 'OK',
             'timeZoneId' => 'America/Los_Angeles',
-            'timeZoneName' => 'Pacific Standard Time'
+            'timeZoneName' => 'Pacific Standard Time',
         ];
     }
 
     public function testTimezoneResponseParsing(): void
     {
-        $timezoneResponse = TimezoneResponse::factory($this->getTimezoneApiResult());
+        $timezoneResponse = TimezoneResponse::factory(self::getTimezoneApiResult());
 
         // Response metadata
-        $this->assertSame('OK', $timezoneResponse->getStatus());
-        $this->assertNull($timezoneResponse->getErrorMessage());
+        self::assertSame('OK', $timezoneResponse->getStatus());
+        self::assertNull($timezoneResponse->getErrorMessage());
 
         // Response data
-        $this->assertSame(0, $timezoneResponse->getDstOffset());
-        $this->assertSame(-28800, $timezoneResponse->getRawOffset());
-        $this->assertSame('America/Los_Angeles', $timezoneResponse->getTimeZoneId());
-        $this->assertSame('Pacific Standard Time', $timezoneResponse->getTimeZoneName());
+        self::assertSame(0, $timezoneResponse->getDstOffset());
+        self::assertSame(-28800, $timezoneResponse->getRawOffset());
+        self::assertSame('America/Los_Angeles', $timezoneResponse->getTimeZoneId());
+        self::assertSame('Pacific Standard Time', $timezoneResponse->getTimeZoneName());
     }
 }
