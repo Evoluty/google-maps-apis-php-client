@@ -29,6 +29,11 @@ class TimeZoneRequest extends GoogleMapsRequest
         $this->timestamp = $dateTime->getTimestamp();
     }
 
+    public function getTimestamp(): int
+    {
+        return $this->timestamp;
+    }
+
     public function withLanguage(Language $language): self
     {
         $this->language = $language;

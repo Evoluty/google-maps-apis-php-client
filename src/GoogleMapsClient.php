@@ -52,7 +52,7 @@ class GoogleMapsClient
     public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
-        $response = TimeZoneResponse::factory($apiResponse);
+        $response = TimeZoneResponse::factory($request->getTimestamp(), $apiResponse);
         self::assertSuccessful($response);
         return $response;
     }

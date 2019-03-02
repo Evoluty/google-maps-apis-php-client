@@ -8,6 +8,9 @@ use GoogleMapsClient\GoogleMapsResponse;
 
 class TimeZoneResponse extends GoogleMapsResponse
 {
+    /** @var int */
+    private $requestedTimestamp;
+
     /** @var int|null */
     private $dstOffset;
 
@@ -23,23 +26,26 @@ class TimeZoneResponse extends GoogleMapsResponse
     public function __construct(
         string $status,
         ?string $errorMessage,
+        int $requestedTimestamp,
         ?int $dstOffset,
         ?int $rawOffset,
         ?string $timeZoneId,
         ?string $timeZoneName)
     {
         parent::__construct($status, $errorMessage);
+        $this->requestedTimestamp = $requestedTimestamp;
         $this->dstOffset = $dstOffset;
         $this->rawOffset = $rawOffset;
         $this->timeZoneId = $timeZoneId;
         $this->timeZoneName = $timeZoneName;
     }
 
-    public static function factory(\stdClass $apiResponse): self
+    public static function factory(int $requestedTimestamp, \stdClass $apiResponse): self
     {
         return new self(
             $apiResponse->status,
             $apiResponse->errorMessage ?? null,
+            $requestedTimestamp,
             isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
             isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
             $apiResponse->timeZoneId ?? null,
@@ -78,5 +84,19 @@ class TimeZoneResponse extends GoogleMapsResponse
     public function successful(): bool
     {
         return $this->getStatus() === 'OK';
+    }
+
+    public function getLocalDate(): ?\DateTime
+    {
+        $timeZone = $this->getResult();
+        if ($timeZone === null) {
+            return null;
+        }
+
+        $return = new \DateTime();
+        $return->setTimestamp($this->requestedTimestamp);
+        $return->setTimezone($timeZone);
+
+        return $return;
     }
 }

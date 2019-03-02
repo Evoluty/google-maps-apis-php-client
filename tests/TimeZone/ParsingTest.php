@@ -22,7 +22,7 @@ class ParsingTest extends TestCase
 
     public function testTimeZoneResponseParsing(): void
     {
-        $timeZoneResponse = TimeZoneResponse::factory(self::getTimeZoneApiResult());
+        $timeZoneResponse = TimeZoneResponse::factory(0, self::getTimeZoneApiResult());
 
         // Response metadata
         self::assertSame('OK', $timeZoneResponse->getStatus());
