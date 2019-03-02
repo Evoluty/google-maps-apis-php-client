@@ -6,15 +6,15 @@ namespace GoogleMapsClient\Tests;
 
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Language;
-use GoogleMapsClient\TimezoneApi\TimezoneLocation;
+use GoogleMapsClient\TimeZone\TimeZoneLocation;
 use PHPUnit\Framework\TestCase;
 
 class RequestBuilderTest extends TestCase
 {
     public function testTimezoneRequestBuilding(): void
     {
-        $request = GoogleMapsRequest::newTimezoneRequest(
-            new TimezoneLocation('39.6034810', '-119.6822510'),
+        $request = GoogleMapsRequest::newTimeZoneRequest(
+            new TimeZoneLocation('39.6034810', '-119.6822510'),
             1331161200
         )->withLanguage(Language::CZECH());
 

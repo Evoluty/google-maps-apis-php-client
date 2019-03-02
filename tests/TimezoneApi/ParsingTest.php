@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\Tests;
 
-use GoogleMapsClient\TimezoneApi\TimezoneResponse;
+use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use PHPUnit\Framework\TestCase;
 
 class ParsingTest extends TestCase
@@ -22,7 +22,7 @@ class ParsingTest extends TestCase
 
     public function testTimezoneResponseParsing(): void
     {
-        $timezoneResponse = TimezoneResponse::factory(self::getTimezoneApiResult());
+        $timezoneResponse = TimeZoneResponse::factory(self::getTimezoneApiResult());
 
         // Response metadata
         self::assertSame('OK', $timezoneResponse->getStatus());

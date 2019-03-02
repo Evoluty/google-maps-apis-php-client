@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient;
 
-use GoogleMapsClient\TimezoneApi\TimezoneRequest;
-use GoogleMapsClient\TimezoneApi\TimezoneResponse;
+use GoogleMapsClient\TimeZone\TimeZoneRequest;
+use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -54,9 +54,9 @@ class GoogleMapsClient
         return $stdResult;
     }
 
-    public function sendTimezoneRequest(TimezoneRequest $request): TimezoneResponse
+    public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
-        return TimezoneResponse::factory($apiResponse);
+        return TimeZoneResponse::factory($apiResponse);
     }
 }
