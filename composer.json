@@ -30,9 +30,12 @@
       "GoogleMapsClient\\": "src/"
     }
   },
+  "scripts": {
+    "test": "phpunit"
+  },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\GoogleMapsClient\\": "tests/"
+      "GoogleMapsClient\\Tests\\": "tests/"
     }
   }
 }
