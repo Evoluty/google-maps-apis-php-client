@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\GoogleMapsClient\TimezoneApi;
+namespace GoogleMapsClient\Tests;
 
 use GoogleMapsClient\TimezoneApi\TimezoneResponse;
 
@@ -17,7 +17,7 @@ class ParsingTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testClientUsage(): void
+    public function testTimezoneResponseParsing(): void
     {
         $timezoneResponse = TimezoneResponse::factory($this->getTimezoneApiResult());
 

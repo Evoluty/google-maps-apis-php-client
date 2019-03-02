@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\GoogleMapsClient\TimezoneApi;
+namespace GoogleMapsClient\Tests;
 
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Language;
@@ -8,7 +8,7 @@ use GoogleMapsClient\TimezoneApi\TimezoneLocation;
 
 class RequestBuilderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testClientUsage(): void
+    public function testTimezoneRequestBuilding(): void
     {
         $request = GoogleMapsRequest::newTimezoneRequest(
             new TimezoneLocation('39.6034810', '-119.6822510'), 1331161200
