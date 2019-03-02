@@ -19,7 +19,7 @@ class TimeZoneRequest extends GoogleMapsRequest
     /** @var Language|null */
     private $language = null;
 
-    public function __construct(TimeZoneLocation $location, int $timestamp, RequestFactoryInterface $requestFactory = null)
+    public function __construct(TimeZoneLocation $location, int $timestamp, ?RequestFactoryInterface $requestFactory = null)
     {
         $this->location = $location;
         $this->timestamp = $timestamp;

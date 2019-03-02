@@ -15,7 +15,7 @@ abstract class GoogleMapsRequest
     /** @var RequestFactoryInterface */
     private $requestFactory;
 
-    public function __construct(RequestFactoryInterface $requestFactory = null)
+    public function __construct(?RequestFactoryInterface $requestFactory = null)
     {
         $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
     }
@@ -27,7 +27,7 @@ abstract class GoogleMapsRequest
 
     protected abstract function getQueryString(): string;
 
-    public static function newTimeZoneRequest(TimeZoneLocation $location, int $timestamp, RequestFactoryInterface $uriFactory = null): TimeZoneRequest
+    public static function newTimeZoneRequest(TimeZoneLocation $location, int $timestamp, ?RequestFactoryInterface $uriFactory = null): TimeZoneRequest
     {
         return new TimeZoneRequest($location, $timestamp, $uriFactory);
     }
