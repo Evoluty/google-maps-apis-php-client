@@ -8,19 +8,25 @@ use GoogleMapsClient\GoogleMapsResponse;
 
 class TimeZoneResponse extends GoogleMapsResponse
 {
-    /** @var int */
+    /** @var int|null */
     private $dstOffset;
 
-    /** @var int */
+    /** @var int|null */
     private $rawOffset;
 
-    /** @var string */
+    /** @var string|null */
     private $timeZoneId;
 
-    /** @var string */
+    /** @var string|null */
     private $timeZoneName;
 
-    public function __construct(string $status, ?string $errorMessage, int $dstOffset, int $rawOffset, string $timeZoneId, string $timeZoneName)
+    public function __construct(
+        string $status,
+        ?string $errorMessage,
+        ?int $dstOffset,
+        ?int $rawOffset,
+        ?string $timeZoneId,
+        ?string $timeZoneName)
     {
         parent::__construct($status, $errorMessage);
         $this->dstOffset = $dstOffset;
@@ -36,27 +42,27 @@ class TimeZoneResponse extends GoogleMapsResponse
             $apiResponse->errorMessage ?? null,
             isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
             isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
-            $apiResponse->timeZoneId,
-            $apiResponse->timeZoneName
+            $apiResponse->timeZoneId ?? null,
+            $apiResponse->timeZoneName ?? null
         );
     }
 
-    public function getDstOffset(): int
+    public function getDstOffset(): ?int
     {
         return $this->dstOffset;
     }
 
-    public function getRawOffset(): int
+    public function getRawOffset(): ?int
     {
         return $this->rawOffset;
     }
 
-    public function getTimeZoneId(): string
+    public function getTimeZoneId(): ?string
     {
         return $this->timeZoneId;
     }
 
-    public function getTimeZoneName(): string
+    public function getTimeZoneName(): ?string
     {
         return $this->timeZoneName;
     }
