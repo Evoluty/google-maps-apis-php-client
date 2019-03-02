@@ -20,10 +20,13 @@ class TimeZoneRequest extends GoogleMapsRequest
     /** @var Language|null */
     private $language = null;
 
-    public function __construct(Geolocation $location, \DateTime $dateTime, ?RequestFactoryInterface $requestFactory = null)
+    public function __construct(Geolocation $location, ?\DateTime $dateTime = null, ?RequestFactoryInterface $requestFactory = null)
     {
         parent::__construct($requestFactory);
         $this->location = $location;
+        if ($dateTime === null) {
+            $dateTime = new \DateTime();
+        }
         $this->dateTime = $dateTime;
     }
 
