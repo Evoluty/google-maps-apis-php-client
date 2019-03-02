@@ -11,6 +11,8 @@ use GuzzleHttp\Psr7\Response;
 
 class ClientTest extends AbstractClientTest
 {
+    use TimeZoneUtils;
+
     public function testOk(): void
     {
         $expectedResponse = new Response(200, [], json_encode([
@@ -25,7 +27,7 @@ class ClientTest extends AbstractClientTest
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
             new Geolocation('39.6034810', '-119.6822510'),
-            1331161200
+            self::getDateTimeFromTimestamp(1331161200)
         );
 
         $response = $client->sendTimeZoneRequest($request);

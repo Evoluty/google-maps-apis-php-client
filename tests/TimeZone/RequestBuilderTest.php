@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace GoogleMapsClient\Tests\Timezone;
 
 use GoogleMapsClient\Classes\Geolocation;
-use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Classes\Language;
+use GoogleMapsClient\GoogleMapsRequest;
 use PHPUnit\Framework\TestCase;
 
 class RequestBuilderTest extends TestCase
 {
+    use TimeZoneUtils;
+
     public function testTimeZoneRequestBuilding(): void
     {
         $request = GoogleMapsRequest::newTimeZoneRequest(
             new Geolocation('39.6034810', '-119.6822510'),
-            1331161200
+            self::getDateTimeFromTimestamp(1331161200)
         )->withLanguage(Language::CZECH());
 
         $generatedRequest = $request->getRequest();
