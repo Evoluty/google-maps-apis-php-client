@@ -4,7 +4,6 @@ php:
   - '7.3'
 
 install:
-   - travis_retry composer require zendframework/zend-diactoros --no-interaction --no-suggest
    - travis_retry composer install --no-interaction --no-suggest
 
 script:
