@@ -41,17 +41,21 @@ class GoogleMapsClient
             throw new \UnexpectedValueException('Unable to parse Google Api result');
         }
 
-        // @todo: better error handling
-        if ($stdResult->status !== 'OK') {
-            throw new \UnexpectedValueException($stdResult->status . ' ' . $stdResult->errorMessage);
-        }
-
         return $stdResult;
     }
 
     public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
-        return TimeZoneResponse::factory($apiResponse);
+        $response = TimeZoneResponse::factory($apiResponse);
+        self::assertSuccessful($response);
+        return $response;
+    }
+
+    private static function assertSuccessful(GoogleMapsResponse $response): void
+    {
+        if (!$response->successful()) {
+            throw new \UnexpectedValueException($response->getStatus() . ' ' . $response->getErrorMessage());
+        }
     }
 }
