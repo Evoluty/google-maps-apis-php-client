@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient;
 
+use GoogleMapsClient\Errors\ApiException;
+
 abstract class GoogleMapsResponse
 {
     /** @var string */
@@ -33,4 +35,12 @@ abstract class GoogleMapsResponse
      */
     public abstract function getResult();
     public abstract function successful(): bool;
+
+    public function getError(): ?ApiException
+    {
+        if ($this->successful()) {
+            return null;
+        }
+        return ApiException::from($this->status, $this->errorMessage);
+    }
 }
