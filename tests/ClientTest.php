@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\Tests;
 
+use GoogleMapsClient\Classes\Geolocation;
 use GoogleMapsClient\GoogleMapsRequest;
-use GoogleMapsClient\Language;
-use GoogleMapsClient\TimeZone\TimeZoneLocation;
+use GoogleMapsClient\Classes\Language;
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use GuzzleHttp\Psr7\Response;
 
@@ -66,7 +66,7 @@ class ClientTest extends AbstractClientTest
         $client = static::getClient($expectedResponse);
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
-            new TimeZoneLocation('39.6034810', '-119.6822510'),
+            new Geolocation('39.6034810', '-119.6822510'),
             1331161200
         )->withLanguage(Language::CZECH());
 

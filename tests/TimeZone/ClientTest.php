@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace GoogleMapsClient\Tests\Timezone;
 
+use GoogleMapsClient\Classes\Geolocation;
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Tests\AbstractClientTest;
-use GoogleMapsClient\TimeZone\TimeZoneLocation;
 use GuzzleHttp\Psr7\Response;
 
-class TimeZoneClientTest extends AbstractClientTest
+class ClientTest extends AbstractClientTest
 {
     public function testOk(): void
     {
@@ -24,7 +24,7 @@ class TimeZoneClientTest extends AbstractClientTest
         $client = static::getClient($expectedResponse);
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
-            new TimeZoneLocation('39.6034810', '-119.6822510'),
+            new Geolocation('39.6034810', '-119.6822510'),
             1331161200
         );
 
