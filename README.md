@@ -13,7 +13,7 @@ Run `composer require evoluty/google-maps-client`  or check directly on the [pac
 ## Usage
 Use like the following (example with the TimeZone API)
 ```php
-$googleClient = new GoogleMapClient(<your_api_key>');
+$googleClient = new GoogleMapClient('<your_api_key>');
 
 $request = GoogleMapRequest::newTimeZoneRequest(
     new TimeZoneLocation('39.6034810', '-119.6822510'), 1331161200
@@ -30,3 +30,4 @@ The response type depends on the API that you are calling and will contain publi
 
 At the moment the following API are implemented:
 * TimeZone API
+* Directions API
