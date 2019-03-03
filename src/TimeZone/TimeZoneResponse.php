@@ -20,7 +20,7 @@ class TimeZoneResponse extends GoogleMapsResponse
     /** @var string */
     private $timeZoneName;
 
-    public function __construct(int $dstOffset, int $rawOffset, string $timeZoneId, string $timeZoneName, string $status, ?string $errorMessage = null)
+    public function __construct(string $status, ?string $errorMessage, int $dstOffset, int $rawOffset, string $timeZoneId, string $timeZoneName)
     {
         parent::__construct($status, $errorMessage);
         $this->dstOffset = $dstOffset;
@@ -32,12 +32,12 @@ class TimeZoneResponse extends GoogleMapsResponse
     public static function factory(\stdClass $apiResponse): self
     {
         return new self(
+            $apiResponse->status,
+            $apiResponse->errorMessage ?? null,
             isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
             isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
             $apiResponse->timeZoneId,
-            $apiResponse->timeZoneName,
-            $apiResponse->status,
-            $apiResponse->errorMessage ?? null
+            $apiResponse->timeZoneName
         );
     }
 

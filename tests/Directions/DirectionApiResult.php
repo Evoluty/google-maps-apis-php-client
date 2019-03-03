@@ -17,7 +17,6 @@ return (object)[
             'types' => [
                 'political',
                 'sublocality',
-                'sublocality_level_1',
             ],
         ],
     ],
@@ -43,6 +42,10 @@ return (object)[
                     'duration' => (object)[
                         'text' => '28 mins',
                         'value' => 1702,
+                    ],
+                    "duration_in_traffic" => (object)[
+                        "text" => "48 mins",
+                        "value" => 2904,
                     ],
                     'end_address' => 'Queens, NY, USA',
                     'end_location' => (object)[
@@ -319,7 +322,24 @@ return (object)[
                         ],
                     ],
                     'traffic_speed_entry' => [],
-                    'via_waypoint' => [],
+                    'via_waypoint' => [
+                        (object)[
+                            'location' => (object)[
+                                'lat' => 42.3781732,
+                                'lng' => -71.06024889999999
+                            ],
+                            'step_index' => 6,
+                            'step_interpolation' => 0.2067913715981807,
+                        ],
+                        (object)[
+                            'location' => (object)[
+                                'lat' => 42.4473497,
+                                'lng' => -71.2271531
+                            ],
+                            'step_index' => 12,
+                            'step_interpolation' => 1
+                        ]
+                    ],
                 ],
             ],
             'overview_polyline' => (object)[

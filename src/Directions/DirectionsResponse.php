@@ -1,61 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GoogleMapsClient\Directions;
 
+use GoogleMapsClient\Directions\Classes\DirectionsGeocodedWaypoint;
+use GoogleMapsClient\Directions\Classes\DirectionsRoute;
 use GoogleMapsClient\GoogleMapsResponse;
 
 class DirectionsResponse extends GoogleMapsResponse
 {
-    /** @var int */
-    private $dstOffset;
+    /** @var DirectionsGeocodedWaypoint[] */
+    private $geocodedWaypoints;
 
-    /** @var int */
-    private $rawOffset;
+    /** @var DirectionsRoute[] */
+    private $routes;
 
-    /** @var string */
-    private $timeZoneId;
-
-    /** @var string */
-    private $timeZoneName;
-
-    public function __construct(int $dstOffset, int $rawOffset, string $timeZoneId, string $timeZoneName, string $status, ?string $errorMessage = null)
+    public function __construct(string $status, ?string $errorMessage, array $geocodedWaypoints, array $routes)
     {
         parent::__construct($status, $errorMessage);
-        $this->dstOffset = $dstOffset;
-        $this->rawOffset = $rawOffset;
-        $this->timeZoneId = $timeZoneId;
-        $this->timeZoneName = $timeZoneName;
+        $this->geocodedWaypoints = $geocodedWaypoints;
+        $this->routes = $routes;
     }
 
     public static function factory(\stdClass $apiResponse): self
     {
         return new self(
-            isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
-            isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
-            $apiResponse->timeZoneId,
-            $apiResponse->timeZoneName,
             $apiResponse->status,
-            $apiResponse->errorMessage ?? null
+            $apiResponse->errorMessage ?? null,
+            array_map(function (\stdClass $geoWaypoint) { return DirectionsGeocodedWaypoint::factory($geoWaypoint); }, $apiResponse->geocoded_waypoints),
+            array_map(function (\stdClass $route) { return DirectionsRoute::factory($route); }, $apiResponse->routes)
         );
     }
 
-    public function getDstOffset(): int
+    /** @return DirectionsGeocodedWaypoint[] */
+    public function getGeocodedWaypoints(): array
     {
-        return $this->dstOffset;
+        return $this->geocodedWaypoints;
     }
 
-    public function getRawOffset(): int
+    /** @return DirectionsRoute[] */
+    public function getRoutes(): array
     {
-        return $this->rawOffset;
-    }
-
-    public function getTimeZoneId(): string
-    {
-        return $this->timeZoneId;
-    }
-
-    public function getTimeZoneName(): string
-    {
-        return $this->timeZoneName;
+        return $this->routes;
     }
 }

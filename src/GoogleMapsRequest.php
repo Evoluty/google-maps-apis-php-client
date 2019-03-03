@@ -33,7 +33,7 @@ abstract class GoogleMapsRequest
         return new TimeZoneRequest($location, $timestamp, $uriFactory);
     }
 
-    public static function newDirectionsRequest(string $origin, string $destination, RequestFactoryInterface $uriFactory = null): DirectionsRequest
+    public static function newDirectionsRequest(string $origin, string $destination, ?RequestFactoryInterface $uriFactory = null): DirectionsRequest
     {
         return new DirectionsRequest($origin, $destination, $uriFactory);
     }

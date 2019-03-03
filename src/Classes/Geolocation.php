@@ -18,6 +18,24 @@ class Geolocation
         $this->longitude = $longitude;
     }
 
+    public static function factory(\stdClass $stdGeolocation): self
+    {
+        return new self(
+            strval($stdGeolocation->lat),
+            strval($stdGeolocation->lng)
+        );
+    }
+
+    public function getLatitude(): string
+    {
+        return $this->latitude;
+    }
+
+    public function getLongitude(): string
+    {
+        return $this->longitude;
+    }
+
     public function __toString(): string
     {
         return $this->latitude . ',' . $this->longitude;

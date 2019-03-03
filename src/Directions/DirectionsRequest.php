@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GoogleMapsClient\Directions;
 
 use GoogleMapsClient\Classes\AvoidableRoute;
@@ -7,6 +9,11 @@ use GoogleMapsClient\Classes\TrafficModel;
 use GoogleMapsClient\Classes\TransitMode;
 use GoogleMapsClient\Classes\TransitRoutingPreference;
 use GoogleMapsClient\Classes\TravelMode;
+use GoogleMapsClient\Directions\Classes\DirectionsGeolocationWaypoint;
+use GoogleMapsClient\Directions\Classes\DirectionsPlaceIdWaypoint;
+use GoogleMapsClient\Directions\Classes\DirectionsPlaceNameWaypoint;
+use GoogleMapsClient\Directions\Classes\DirectionsPolylineWaypoint;
+use GoogleMapsClient\Directions\Classes\DirectionsWaypoint;
 use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Classes\Language;
 use GoogleMapsClient\Classes\UnitSystem;
@@ -23,13 +30,16 @@ class DirectionsRequest extends GoogleMapsRequest
     /** @var TravelMode|null */
     private $mode = null;
 
-    /** @var string[] */
+    /** @var DirectionsWaypoint[] */
     private $waypoints = [];
+
+    /** @var bool */
+    private $optimizedWaypoints = false;
 
     /** @var bool|null */
     private $alternatives = null;
 
-    /** @var string[] */
+    /** @var AvoidableRoute[] */
     private $avoid = [];
 
     /** @var Language|null */
@@ -69,11 +79,39 @@ class DirectionsRequest extends GoogleMapsRequest
         return $this;
     }
 
-    public function withWaypoint(string $waypoint): self
+    public function withGeolocationWaypoint(string $latitude, string $longitude, bool $isVia = false): self
     {
-        // &todo: add optimise:true parameter to optimise waypoints order
-        // @todo: add "via" endpoints handling to avoid stopover waypoints
+        $waypoint = new DirectionsGeolocationWaypoint($latitude, $longitude, $isVia);
+        return $this->withWaypoint($waypoint);
+    }
+
+    public function withPlaceIdWaypoint(string $placeId, bool $isVia = false): self
+    {
+        $waypoint = new DirectionsPlaceIdWaypoint($placeId, $isVia);
+        return $this->withWaypoint($waypoint);
+    }
+
+    public function withPolylineWaypoint(string $polyline, bool $isVia = false): self
+    {
+        $waypoint = new DirectionsPolylineWaypoint($polyline, $isVia);
+        return $this->withWaypoint($waypoint);
+    }
+
+    public function withPlaceNameWaypoint(string $placeName, bool $isVia = false): self
+    {
+        $waypoint = new DirectionsPlaceNameWaypoint($placeName, $isVia);
+        return $this->withWaypoint($waypoint);
+    }
+
+    private function withWaypoint(DirectionsWaypoint $waypoint): self
+    {
         $this->waypoints[] = $waypoint;
+        return $this;
+    }
+
+    public function withOptimizedWaypoints(): self
+    {
+        $this->optimizedWaypoints = true;
         return $this;
     }
 
@@ -103,42 +141,37 @@ class DirectionsRequest extends GoogleMapsRequest
 
     public function withRegion(string $region): self
     {
-        // @todo: why not an Enum for that
+        // @todo: find possible values to replace by an enum
         $this->region = $region;
         return $this;
     }
 
     public function withArrivalTime(int $arrivalTime): self
     {
-        // @todo: check with departure time
         $this->arrivalTime = $arrivalTime;
         return $this;
     }
 
     public function withDepartureTime(int $departureTime): self
     {
-        // @todo: check with arrival time and travel mode
         $this->departureTime = $departureTime;
         return $this;
     }
 
     public function withTrafficModel(TrafficModel $trafficModel): self
     {
-        // @todo: check need departure time
         $this->trafficModel = $trafficModel;
         return $this;
     }
 
     public function withTransitMode(TransitMode $transitMode): self
     {
-        // @todo: check that we are in transit mode
         $this->transitMode[] = $transitMode;
         return $this;
     }
 
     public function withTransitRoutingPreference(TransitRoutingPreference $preference): self
     {
-        // @todo: check that we are in transit mode
         $this->transitRoutingPreference = $preference;
         return $this;
     }
@@ -155,15 +188,22 @@ class DirectionsRequest extends GoogleMapsRequest
         }
 
         if (!empty($this->waypoints)) {
-            $args['waypoints'] = join('|', array_values($this->waypoints));
+            $wayPoints = '';
+            if ($this->optimizedWaypoints) {
+                $wayPoints .= 'optimize:true|';
+            }
+
+            $wayPoints .= join('|', array_map('strval', $this->waypoints));
+
+            $args['waypoints'] = $wayPoints;
         }
 
         if (!empty($this->alternatives)) {
-            $args['alternatives'] = $this->alternatives;
+            $args['alternatives'] = $this->alternatives ? 'true' : 'false';
         }
 
         if (!empty($this->avoid)) {
-            $args['avoid'] = join('|', array_map(function (AvoidableRoute $e) { return $e->getValue(); }, $this->waypoints));
+            $args['avoid'] = join('|', array_map(function (AvoidableRoute $e) { return $e->getValue(); }, $this->avoid));
         }
 
         if (!empty($this->language)) {
@@ -179,6 +219,9 @@ class DirectionsRequest extends GoogleMapsRequest
         }
 
         if (!empty($this->arrivalTime)) {
+            if (!empty($this->departureTime)) {
+                throw new \UnexpectedValueException('Both arrival time and departure time cannot be specified for the Directions API');
+            }
             $args['arrival_time'] = $this->arrivalTime;
         }
 
@@ -187,11 +230,26 @@ class DirectionsRequest extends GoogleMapsRequest
         }
 
         if (!empty($this->trafficModel)) {
+            if (!TravelMode::DRIVING()->equals($this->mode)) {
+                throw new \UnexpectedValueException('The traffic_model can only be specified if the mode is set to driving');
+            } else if (empty($this->departureTime)) {
+                throw new \UnexpectedValueException('The traffic_model can only be specified if a departure time is set');
+            }
             $args['traffic_model'] = $this->trafficModel->getValue();
         }
 
         if (!empty($this->transitMode)) {
+            if (!TravelMode::TRANSIT()->equals($this->mode)) {
+                throw new \UnexpectedValueException('The transit_mode can only be specified if the mode is set to transit');
+            }
             $args['transit_mode'] = join('|', array_map(function (TransitMode $e) { return $e->getValue(); }, $this->transitMode));
+        }
+
+        if (!empty($this->transitRoutingPreference)) {
+            if (!$this->mode->equals(TravelMode::TRANSIT())) {
+                throw new \UnexpectedValueException('The transit_routing_preference can only be specified if the mode is set to transit');
+            }
+            $args['transit_routing_preference'] = $this->transitRoutingPreference->getValue();
         }
 
         return http_build_query($args);
