@@ -14,10 +14,10 @@ class DirectionsViaWaypoint
     /** @var int */
     private $stepIndex;
 
-    /** @var float */
+    /** @var string */
     private $stepInterpolation;
 
-    public function __construct(Geolocation $location, int $stepIndex, float $stepInterpolation)
+    public function __construct(Geolocation $location, int $stepIndex, string $stepInterpolation)
     {
         $this->location = $location;
         $this->stepIndex = $stepIndex;
@@ -29,7 +29,7 @@ class DirectionsViaWaypoint
         return new self(
             Geolocation::factory($stdViaWaypoint->location),
             intval($stdViaWaypoint->step_index),
-            floatval($stdViaWaypoint->step_interpolation)
+            strval($stdViaWaypoint->step_interpolation)
         );
     }
 
@@ -43,7 +43,7 @@ class DirectionsViaWaypoint
         return $this->stepIndex;
     }
 
-    public function getStepInterpolation(): float
+    public function getStepInterpolation(): string
     {
         return $this->stepInterpolation;
     }

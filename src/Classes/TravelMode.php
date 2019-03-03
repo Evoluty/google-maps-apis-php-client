@@ -18,4 +18,9 @@ final class TravelMode extends Enum
     const WALKING = 'walking';
     const BICYCLING = 'bicycling';
     const TRANSIT = 'transit';
+
+    public static function factory(string $travelMode): self
+    {
+        return new self(mb_strtolower($travelMode));
+    }
 }

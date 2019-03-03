@@ -53,7 +53,7 @@ class DirectionsStep
             $stdStep->html_instructions,
             Polyline::factory($stdStep->polyline),
             Geolocation::factory($stdStep->start_location),
-            new TravelMode(mb_strtolower($stdStep->travel_mode))
+            TravelMode::factory($stdStep->travel_mode)
         );
     }
 

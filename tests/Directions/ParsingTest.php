@@ -12,9 +12,9 @@ class ParsingTest extends TestCase
 {
     public function testTimeZoneResponseParsing(): void
     {
-        $apiResponse = require __DIR__ . '/DirectionApiResult.php';
+        $apiResult = file_get_contents(__DIR__ . '/direction_api_result.json');
 
-        $directionsResponse = DirectionsResponse::factory($apiResponse);
+        $directionsResponse = DirectionsResponse::factory(json_decode($apiResult));
 
         /* Response metadata */
         self::assertSame('OK', $directionsResponse->getStatus());
@@ -58,11 +58,11 @@ class ParsingTest extends TestCase
         self::assertSame('42.3781732', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[0]->getLocation()->getLatitude());
         self::assertSame('-71.0602489', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[0]->getLocation()->getLongitude());
         self::assertSame(6, $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[0]->getStepIndex());
-        self::assertSame(0.2067913715981807, $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[0]->getStepInterpolation());
+        self::assertSame('0.20679137159818', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[0]->getStepInterpolation());
         self::assertSame('42.4473497', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[1]->getLocation()->getLatitude());
         self::assertSame('-71.2271531', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[1]->getLocation()->getLongitude());
         self::assertSame(12, $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[1]->getStepIndex());
-        self::assertSame(1., $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[1]->getStepInterpolation());
+        self::assertSame('1', $directionsResponse->getRoutes()[0]->getLegs()[0]->getViaWaypoints()[1]->getStepInterpolation());
 
         // Step
         self::assertSame('1.9 mi', $directionsResponse->getRoutes()[0]->getLegs()[0]->getSteps()[0]->getDistance()->getText());

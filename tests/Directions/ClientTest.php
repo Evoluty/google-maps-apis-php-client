@@ -12,10 +12,10 @@ class ClientTest extends AbstractClientTest
 {
     public function testOk(): void
     {
-        $apiResult = require __DIR__ . '/DirectionApiResult.php';
+        $apiResult = file_get_contents(__DIR__ . '/direction_api_result.json');
 
         $expectedResponse = new Response(
-            200, [], json_encode($apiResult)
+            200, [], $apiResult
         );
 
         $client = static::getClient($expectedResponse);
