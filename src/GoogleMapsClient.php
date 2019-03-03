@@ -73,6 +73,8 @@ class GoogleMapsClient
     public function sendDirectionsRequest(DirectionsRequest $request): DirectionsResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'directions');
-        return DirectionsResponse::factory($apiResponse);
+        $response = DirectionsResponse::factory($apiResponse);
+        self::assertSuccessful($response);
+        return $response;
     }
 }

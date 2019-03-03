@@ -47,31 +47,28 @@ class TimeZoneResponse extends GoogleMapsResponse
         );
     }
 
-    public function getDstOffset(): ?int
+    public function getDstOffset(): int
     {
         return $this->dstOffset;
     }
 
-    public function getRawOffset(): ?int
+    public function getRawOffset(): int
     {
         return $this->rawOffset;
     }
 
-    public function getTimeZoneId(): ?string
+    public function getTimeZoneId(): string
     {
         return $this->timeZoneId;
     }
 
-    public function getTimeZoneName(): ?string
+    public function getTimeZoneName(): string
     {
         return $this->timeZoneName;
     }
 
-    public function getTimeZone(): ?\DateTimeZone
+    public function getTimeZone(): \DateTimeZone
     {
-        if ($this->timeZoneId === null) {
-            return null;
-        }
         return new \DateTimeZone($this->timeZoneId);
     }
 
