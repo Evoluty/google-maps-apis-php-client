@@ -67,7 +67,7 @@ class TimeZoneResponse extends GoogleMapsResponse
         return $this->timeZoneName;
     }
 
-    public function getResult(): ?\DateTimeZone
+    public function getTimeZone(): ?\DateTimeZone
     {
         if ($this->timeZoneId === null) {
             return null;

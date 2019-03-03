@@ -44,4 +44,9 @@ class DirectionsResponse extends GoogleMapsResponse
     {
         return $this->routes;
     }
+
+    public function successful(): bool
+    {
+        return $this->getStatus() === 'OK' || $this->getStatus() === 'ZERO_RESULTS';
+    }
 }
