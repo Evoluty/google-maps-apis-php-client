@@ -246,7 +246,7 @@ class DirectionsRequest extends GoogleMapsRequest
         }
 
         if (!empty($this->transitRoutingPreference)) {
-            if (!$this->mode->equals(TravelMode::TRANSIT())) {
+            if (!TravelMode::TRANSIT()->equals($this->mode)) {
                 throw new \UnexpectedValueException('The transit_routing_preference can only be specified if the mode is set to transit');
             }
             $args['transit_routing_preference'] = $this->transitRoutingPreference->getValue();
