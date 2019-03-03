@@ -9,7 +9,7 @@ use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Tests\AbstractClientTest;
 use GuzzleHttp\Psr7\Response;
 
-class TimeZoneClientTest extends AbstractClientTest
+class ClientTest extends AbstractClientTest
 {
     public function testOk(): void
     {
