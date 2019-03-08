@@ -27,11 +27,13 @@ class ParsingTest extends TestCase
         // Response metadata
         self::assertSame('OK', $timeZoneResponse->getStatus());
         self::assertNull($timeZoneResponse->getErrorMessage());
+        self::assertNull($timeZoneResponse->getError());
 
         // Response data
         self::assertSame(0, $timeZoneResponse->getDstOffset());
         self::assertSame(-28800, $timeZoneResponse->getRawOffset());
         self::assertSame('America/Los_Angeles', $timeZoneResponse->getTimeZoneId());
         self::assertSame('Pacific Standard Time', $timeZoneResponse->getTimeZoneName());
+        self::assertSame(new \DateTimeZone('America/Los_Angeles'), $timeZoneResponse->getTimeZone());
     }
 }
