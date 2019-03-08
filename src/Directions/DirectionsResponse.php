@@ -16,7 +16,7 @@ class DirectionsResponse extends GoogleMapsResponse
     /** @var DirectionsRoute[] */
     private $routes;
 
-    public function __construct(string $status, ?string $errorMessage, array $geocodedWaypoints, array $routes)
+    public function __construct(string $status, ?string $errorMessage, ?array $geocodedWaypoints, ?array $routes)
     {
         parent::__construct($status, $errorMessage);
         $this->geocodedWaypoints = $geocodedWaypoints;
@@ -28,8 +28,12 @@ class DirectionsResponse extends GoogleMapsResponse
         return new self(
             $apiResponse->status,
             $apiResponse->errorMessage ?? null,
-            array_map(function (\stdClass $geoWaypoint) { return DirectionsGeocodedWaypoint::factory($geoWaypoint); }, $apiResponse->geocoded_waypoints),
-            array_map(function (\stdClass $route) { return DirectionsRoute::factory($route); }, $apiResponse->routes)
+            isset($apiResponse->geocoded_waypoints) ? array_map(function (\stdClass $geoWaypoint) {
+                return DirectionsGeocodedWaypoint::factory($geoWaypoint);
+            }, $apiResponse->geocoded_waypoints) : null,
+            isset($apiResponse->routes) ? array_map(function (\stdClass $route) {
+                return DirectionsRoute::factory($route);
+            }, $apiResponse->routes) : null
         );
     }
 

@@ -46,35 +46,15 @@ class GoogleMapsClient
         return $stdResult;
     }
 
-    /**
-     * @param TimeZoneRequest $request
-     * @return TimeZoneResponse
-     * @throws Errors\ApiException
-     */
     public function sendTimeZoneRequest(TimeZoneRequest $request): TimeZoneResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'timezone');
-        $response = TimeZoneResponse::factory($apiResponse);
-        self::assertSuccessful($response);
-        return $response;
-    }
-
-    /**
-     * @param GoogleMapsResponse $response
-     * @throws Errors\ApiException
-     */
-    private static function assertSuccessful(GoogleMapsResponse $response): void
-    {
-        if (!$response->successful()) {
-            throw $response->getError();
-        }
+        return TimeZoneResponse::factory($apiResponse);
     }
 
     public function sendDirectionsRequest(DirectionsRequest $request): DirectionsResponse
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'directions');
-        $response = DirectionsResponse::factory($apiResponse);
-        self::assertSuccessful($response);
-        return $response;
+        return DirectionsResponse::factory($apiResponse);
     }
 }

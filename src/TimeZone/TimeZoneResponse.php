@@ -8,16 +8,16 @@ use GoogleMapsClient\GoogleMapsResponse;
 
 class TimeZoneResponse extends GoogleMapsResponse
 {
-    /** @var int|null */
+    /** @var int */
     private $dstOffset;
 
-    /** @var int|null */
+    /** @var int */
     private $rawOffset;
 
-    /** @var string|null */
+    /** @var string */
     private $timeZoneId;
 
-    /** @var string|null */
+    /** @var string */
     private $timeZoneName;
 
     public function __construct(

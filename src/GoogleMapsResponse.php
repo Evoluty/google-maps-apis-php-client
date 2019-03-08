@@ -18,6 +18,7 @@ abstract class GoogleMapsResponse
     {
         $this->status = $status;
         $this->errorMessage = $errorMessage;
+        self::assertSuccessful($this);
     }
 
     public function getStatus(): string
@@ -38,5 +39,16 @@ abstract class GoogleMapsResponse
             return null;
         }
         return ApiException::from($this->status, $this->errorMessage);
+    }
+
+    /**
+     * @param GoogleMapsResponse $response
+     * @throws Errors\ApiException
+     */
+    private static function assertSuccessful(GoogleMapsResponse $response): void
+    {
+        if (!$response->successful()) {
+            throw $response->getError();
+        }
     }
 }
