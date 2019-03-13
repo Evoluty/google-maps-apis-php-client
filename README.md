@@ -16,7 +16,7 @@ Use like the following (example with the TimeZone API)
 $googleClient = new GoogleMapClient('<your_api_key>');
 
 $request = GoogleMapRequest::newTimeZoneRequest(
-    new TimeZoneLocation('39.6034810', '-119.6822510'), 1331161200
+    new TimeZoneLocation('39.6034810', '-119.6822510')
 )->withLanguage(Language::CZECH());
 
 $timeZoneResponse = $googleClient->sendTimeZoneRequest($request);
