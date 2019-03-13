@@ -71,9 +71,9 @@ class ClientTest extends AbstractClientTest
         $client = static::getClient($expectedResponse);
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
-            new Geolocation('39.6034810', '-119.6822510'),
-            self::getDateTimeFromTimestamp(1331161200)
-        )->withLanguage(Language::CZECH());
+            new Geolocation('39.6034810', '-119.6822510')
+        )->withDateTime(self::getDateTimeFromTimestamp(1331161200))
+        ->withLanguage(Language::CZECH());
 
         return $client->sendTimeZoneRequest($request);
     }

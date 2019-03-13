@@ -16,9 +16,9 @@ class RequestBuilderTest extends TestCase
     public function testTimeZoneRequestBuilding(): void
     {
         $request = GoogleMapsRequest::newTimeZoneRequest(
-            new Geolocation('39.6034810', '-119.6822510'),
-            self::getDateTimeFromTimestamp(1331161200)
-        )->withLanguage(Language::CZECH());
+            new Geolocation('39.6034810', '-119.6822510')
+        )->withDateTime(self::getDateTimeFromTimestamp(1331161200))
+        ->withLanguage(Language::CZECH());
 
         $generatedRequest = $request->getRequest();
         self::assertSame('GET', $generatedRequest->getMethod());
