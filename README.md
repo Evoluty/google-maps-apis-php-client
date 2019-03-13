@@ -5,6 +5,7 @@ This library helps building query and call the Google Maps APIs
 This will parse results and give usable and typed objects as a result
 
 [![Build Status](https://travis-ci.org/Evoluty/google-maps-apis-php-client.svg?branch=master)](https://travis-ci.org/Evoluty/google-maps-apis-php-client)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Evoluty_google-maps-apis-php-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=Evoluty_google-maps-apis-php-client)
 [![codecov](https://codecov.io/gh/Evoluty/google-maps-apis-php-client/branch/master/graph/badge.svg)](https://codecov.io/gh/Evoluty/google-maps-apis-php-client)
 
 ## Installation
