@@ -6,7 +6,7 @@ namespace GoogleMapsClient\Errors;
 
 class ApiException extends \Exception
 {
-    public static function from(string $status, string $errorMessage): ?ApiException
+    public static function from(string $status, ?string $errorMessage): ?ApiException
     {
         switch ($status) {
             // Classic Geo API error formats

@@ -28,4 +28,21 @@ class RequestBuilderTest extends TestCase
 
         self::assertSame($expectedUri, $generatedUri);
     }
+
+    public function testTimeZoneRequestBuildingEmptyDatetime(): void
+    {
+        $request = GoogleMapsRequest::newTimeZoneRequest(
+            new Geolocation('39.6034810', '-119.6822510')
+        )->withLanguage(Language::CZECH());
+
+        $generatedRequest = $request->getRequest();
+        self::assertSame('GET', $generatedRequest->getMethod());
+
+        $generatedUri = urldecode($generatedRequest->getUri()->__toString());
+
+        $date = new \DateTime();
+        $expectedUri = '/location=39.6034810,-119.6822510&timestamp=' . $date->getTimestamp() . '&language=cs';
+
+        self::assertSame($expectedUri, $generatedUri);
+    }
 }

@@ -28,7 +28,7 @@ abstract class GoogleMapsRequest
 
     protected abstract function getQueryString(): string;
 
-    public static function newTimeZoneRequest(Geolocation $location, ?\DateTime $dateTime, ?RequestFactoryInterface $uriFactory = null): TimeZoneRequest
+    public static function newTimeZoneRequest(Geolocation $location, ?\DateTime $dateTime = null, ?RequestFactoryInterface $uriFactory = null): TimeZoneRequest
     {
         return new TimeZoneRequest($location, $dateTime, $uriFactory);
     }
