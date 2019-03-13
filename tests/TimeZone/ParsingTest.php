@@ -34,6 +34,6 @@ class ParsingTest extends TestCase
         self::assertSame(-28800, $timeZoneResponse->getRawOffset());
         self::assertSame('America/Los_Angeles', $timeZoneResponse->getTimeZoneId());
         self::assertSame('Pacific Standard Time', $timeZoneResponse->getTimeZoneName());
-        self::assertSame(new \DateTimeZone('America/Los_Angeles'), $timeZoneResponse->getTimeZone());
+        $this->assertEquals(new \DateTimeZone('America/Los_Angeles'), $timeZoneResponse->getTimeZone());
     }
 }
