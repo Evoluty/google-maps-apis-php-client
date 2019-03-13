@@ -14,17 +14,16 @@ class TimeZoneRequest extends GoogleMapsRequest
     /** @var Geolocation */
     private $location;
 
-    /** @var int */
-    private $timestamp;
+    /** @var \DateTime */
+    private $dateTime;
 
     /** @var Language|null */
     private $language = null;
 
-    public function __construct(Geolocation $location, int $timestamp, ?RequestFactoryInterface $requestFactory = null)
+    public function __construct(Geolocation $location, ?RequestFactoryInterface $requestFactory = null)
     {
-        $this->location = $location;
-        $this->timestamp = $timestamp;
         parent::__construct($requestFactory);
+        $this->location = $location;
     }
 
     public function withLanguage(Language $language): self
@@ -33,11 +32,21 @@ class TimeZoneRequest extends GoogleMapsRequest
         return $this;
     }
 
+    public function withDateTime(\DateTime $dateTime): self
+    {
+        $this->dateTime = $dateTime;
+        return $this;
+    }
+
     protected function getQueryString(): string
     {
+        if ($this->dateTime === null) {
+            $this->dateTime = new \DateTime();
+        }
+
         $args = [
             'location' => strval($this->location),
-            'timestamp' => $this->timestamp,
+            'timestamp' => $this->dateTime->getTimestamp(),
         ];
 
         if (!empty($this->language)) {

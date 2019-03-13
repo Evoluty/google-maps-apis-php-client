@@ -43,11 +43,6 @@ class GoogleMapsClient
             throw new \UnexpectedValueException('Unable to parse Google Api result');
         }
 
-        // @todo: better error handling
-        if ($stdResult->status !== 'OK') {
-            throw new \UnexpectedValueException($stdResult->status . ' ' . $stdResult->errorMessage);
-        }
-
         return $stdResult;
     }
 

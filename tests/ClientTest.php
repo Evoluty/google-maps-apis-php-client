@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace GoogleMapsClient\Tests;
 
 use GoogleMapsClient\Classes\Geolocation;
-use GoogleMapsClient\GoogleMapsRequest;
 use GoogleMapsClient\Classes\Language;
+use GoogleMapsClient\Errors\InvalidRequestException;
+use GoogleMapsClient\GoogleMapsRequest;
+use GoogleMapsClient\Tests\TimeZone\TimeZoneUtils;
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use GuzzleHttp\Psr7\Response;
+use Http\Client\Exception\HttpException;
 
 class ClientTest extends AbstractClientTest
 {
+    use TimeZoneUtils;
+
     public function testOk(): void
     {
         $expectedResponse = new Response(200, [], json_encode([
@@ -30,7 +35,7 @@ class ClientTest extends AbstractClientTest
 
     public function testNot200(): void
     {
-        $this->expectException('Http\Client\Exception\HttpException');
+        $this->expectException(HttpException::class);
 
         $expectedResponse = new Response(400, [], json_encode([
             'errorMessage' => "Invalid request. Invalid 'timestamp' parameter.",
@@ -42,7 +47,7 @@ class ClientTest extends AbstractClientTest
 
     public function testBadResponse(): void
     {
-        $this->expectException('\UnexpectedValueException');
+        $this->expectException(\UnexpectedValueException::class);
 
         $expectedResponse = new Response(200, [], "{");
 
@@ -51,7 +56,7 @@ class ClientTest extends AbstractClientTest
 
     public function testBadResponseStatus(): void
     {
-        $this->expectException('\UnexpectedValueException');
+        $this->expectException(InvalidRequestException::class);
 
         $expectedResponse = new Response(200, [], json_encode([
             'errorMessage' => "Invalid request. Invalid 'timestamp' parameter.",
@@ -66,9 +71,9 @@ class ClientTest extends AbstractClientTest
         $client = static::getClient($expectedResponse);
 
         $request = GoogleMapsRequest::newTimeZoneRequest(
-            new Geolocation('39.6034810', '-119.6822510'),
-            1331161200
-        )->withLanguage(Language::CZECH());
+            new Geolocation('39.6034810', '-119.6822510')
+        )->withDateTime(self::getDateTimeFromTimestamp(1331161200))
+        ->withLanguage(Language::CZECH());
 
         return $client->sendTimeZoneRequest($request);
     }

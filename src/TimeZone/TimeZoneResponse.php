@@ -20,7 +20,13 @@ class TimeZoneResponse extends GoogleMapsResponse
     /** @var string */
     private $timeZoneName;
 
-    public function __construct(string $status, ?string $errorMessage, int $dstOffset, int $rawOffset, string $timeZoneId, string $timeZoneName)
+    public function __construct(
+        string $status,
+        ?string $errorMessage,
+        ?int $dstOffset,
+        ?int $rawOffset,
+        ?string $timeZoneId,
+        ?string $timeZoneName)
     {
         parent::__construct($status, $errorMessage);
         $this->dstOffset = $dstOffset;
@@ -36,8 +42,8 @@ class TimeZoneResponse extends GoogleMapsResponse
             $apiResponse->errorMessage ?? null,
             isset($apiResponse->dstOffset) ? (int)$apiResponse->dstOffset : null,
             isset($apiResponse->rawOffset) ? (int)$apiResponse->rawOffset : null,
-            $apiResponse->timeZoneId,
-            $apiResponse->timeZoneName
+            $apiResponse->timeZoneId ?? null,
+            $apiResponse->timeZoneName ?? null
         );
     }
 
@@ -59,5 +65,15 @@ class TimeZoneResponse extends GoogleMapsResponse
     public function getTimeZoneName(): string
     {
         return $this->timeZoneName;
+    }
+
+    public function getTimeZone(): \DateTimeZone
+    {
+        return new \DateTimeZone($this->timeZoneId);
+    }
+
+    public function successful(): bool
+    {
+        return $this->getStatus() === 'OK';
     }
 }
