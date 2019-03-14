@@ -9,11 +9,11 @@ install:
 
 script:
   - php -dxdebug.coverage_enable=1 vendor/bin/phpunit --log-junit ./reports/phpunit.junit.xml --coverage-clover ./reports/phpunit.coverage.xml
+
+after_success:
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.3" ]]; then
       sonar-scanner;
     fi
-
-after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 addons:
