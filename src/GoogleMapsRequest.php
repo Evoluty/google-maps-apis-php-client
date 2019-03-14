@@ -6,6 +6,7 @@ namespace GoogleMapsClient;
 
 use GoogleMapsClient\Classes\Geolocation;
 use GoogleMapsClient\Directions\DirectionsRequest;
+use GoogleMapsClient\Elevation\ElevationRequest;
 use GoogleMapsClient\TimeZone\TimeZoneRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -36,5 +37,10 @@ abstract class GoogleMapsRequest
     public static function newDirectionsRequest(string $origin, string $destination, ?RequestFactoryInterface $uriFactory = null): DirectionsRequest
     {
         return new DirectionsRequest($origin, $destination, $uriFactory);
+    }
+
+    public static function newElevationRequest(?RequestFactoryInterface $uriFactory = null): ElevationRequest
+    {
+        return new ElevationRequest($uriFactory);
     }
 }

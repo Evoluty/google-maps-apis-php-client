@@ -6,6 +6,8 @@ namespace GoogleMapsClient;
 
 use GoogleMapsClient\Directions\DirectionsRequest;
 use GoogleMapsClient\Directions\DirectionsResponse;
+use GoogleMapsClient\Elevation\ElevationRequest;
+use GoogleMapsClient\Elevation\ElevationResponse;
 use GoogleMapsClient\TimeZone\TimeZoneRequest;
 use GoogleMapsClient\TimeZone\TimeZoneResponse;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -56,5 +58,11 @@ class GoogleMapsClient
     {
         $apiResponse = $this->handleRequest($request->getRequest(), 'directions');
         return DirectionsResponse::factory($apiResponse);
+    }
+
+    public function sendElevationRequest(ElevationRequest $request): ElevationResponse
+    {
+        $apiResponse = $this->handleRequest($request->getRequest(), 'elevation');
+        return ElevationResponse::factory($apiResponse);
     }
 }
